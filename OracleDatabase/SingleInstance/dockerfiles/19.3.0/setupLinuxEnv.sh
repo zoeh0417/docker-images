@@ -19,8 +19,21 @@ ln -s $ORACLE_BASE/scripts /docker-entrypoint-initdb.d && \
 mkdir $ORACLE_BASE/oradata && \
 mkdir -p $ORACLE_HOME && \
 chmod ug+x $ORACLE_BASE/*.sh && \
-yum -y install oracle-database-preinstall-19c openssl && \
+#yum -y install oracle-database-preinstall-19c openssl && \
+yum -y localinstall /opt/install/oracle-database-preinstall-19c-1.0-1.el7.x86_64.rpm   \
+&& yum -y install openssl  \
+&& yum -y install openssl-devel \
+&& yum -y install lsof \
+&& yum -y install iproute \
+&& yum -y install net-tools \
+&& yum -y install rsyslog \
+&& yum -y install bash-completion \
+&& yum -y install tmux \
+&& yum -y install lrzsz \
+&& yum -y install telnet \
+&& yum -y localinstall /opt/install/rlwrap-0.42-1.el6.x86_64.rpm && \
 rm -rf /var/cache/yum && \
 ln -s $ORACLE_BASE/$PWD_FILE /home/oracle/ && \
 echo oracle:oracle | chpasswd && \
+echo root:oracle | chpasswd && \
 chown -R oracle:dba $ORACLE_BASE

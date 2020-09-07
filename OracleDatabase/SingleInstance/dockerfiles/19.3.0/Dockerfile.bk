@@ -113,12 +113,10 @@ COPY --chown=oracle:dba --from=builder $ORACLE_BASE $ORACLE_BASE
 
 USER root
 RUN $ORACLE_BASE/oraInventory/orainstRoot.sh && \
-    $ORACLE_HOME/root.sh
-RUN mkdir -p /home/oracle/flatfiles/data && \
-    mkdir -p /home/oracle/flatfiles/log && \
-    mkdir -p /home/oracle/flatfiles/bad && \
-    chown -R oracle:dba /home/oracle && \
-    chmod -R 777 /home/oracle
+    $ORACLE_HOME/root.sh && \
+# RUN mkdir -p /home/oralce/flatfiles/{data,log,bad} && \
+#     chown -R oracle:dba /home/oracle && \
+#     chmod -R 777/home/oracle
 
 USER oracle
 WORKDIR /home/oracle
@@ -130,5 +128,5 @@ HEALTHCHECK --interval=1m --start-period=5m \
 CMD exec $ORACLE_BASE/$RUN_FILE
 
 # Copy data fils and Scripts
-COPY tpch/* /home/oracle/flatfiles/data/
-COPY tpch.sh /docker-entrypoint-initdb.d/setup/
+# COPY tpch/* /home/oracle/flatfiles/data/
+# COPY tpch.sql /docker-entrypoint-initdb.d/setup/
